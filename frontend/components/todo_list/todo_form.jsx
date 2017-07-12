@@ -1,12 +1,12 @@
 import React from 'react';
 import { uniqueId } from '../../util/util.js';
-import { receiveTodo } from '../../actions/todo_actions';
+import { createTodo } from '../../actions/todo_actions';
 
 
 class TodoForm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {title: "", body: ""};
+    this.state = {title: "", body: "", done: false};
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleTitle = this.handleTitle.bind(this);
     this.handleBody = this.handleBody.bind(this);
@@ -16,8 +16,9 @@ class TodoForm extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const todo = Object.assign({}, this.state, {id: uniqueId()});
-    this.props.receiveTodo(todo);
-    this.setState({title: "", body: ""});
+    this.props.createTodo({ todo }).then(
+      () => this.setState({ title: "", body: "" })
+);
 
 
   }
